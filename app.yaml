@@ -1,0 +1,13 @@
+name: Video
+package-name: aldryn-video
+url: https://github.com/aldryn/aldryn-video
+author:
+  name: Divio AG
+  url: https://www.divio.ch
+installed-apps:
+  - aldryn_video
+version: 0.0.1
+description: Easy video embeding.
+license:
+  name: BSD
+  text: !literal-include LICENSE.txt

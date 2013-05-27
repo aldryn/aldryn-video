@@ -1,0 +1,5 @@
+include LICENSE.txt
+recursive-include aldryn_video/templates *
+recursive-include aldryn_video/locale *
+recursive-include aldryn_video/migrations *
+recursive-exclude * *.pyc
