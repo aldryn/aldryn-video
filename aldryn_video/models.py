@@ -13,6 +13,8 @@ class OEmbedVideoPlugin(CMSPlugin):
     url = models.URLField(_('URL'), max_length=100)
     width = models.IntegerField(_('Width'), null=True, blank=True)
     height = models.IntegerField(_('Height'), null=True, blank=True)
+    auto_play = models.BooleanField(_('auto play'), default=False)
+    loop_video = models.BooleanField(_('loop'), help_text=_('when true, the video repeats itself when over.'), default=False)
 
     # cached oembed data
     html = models.TextField(blank=True)
@@ -26,6 +28,10 @@ class OEmbedVideoPlugin(CMSPlugin):
             extra['maxwidth'] = self.width
         if self.height:
             extra['maxheight'] = self.height
+        if self.auto_play:
+            extra['autoplay'] = 1
+        if self.loop_video:
+            extra['loop'] = 1
         try:
             self.html = get_embed_code(url=self.url, **extra)
         except Exception as e:
