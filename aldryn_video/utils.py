@@ -12,8 +12,26 @@ providers = micawber.bootstrap_basic()
 
 IFRAME_SRC_REGEX = 'src="([^"]+)"'
 
-# List of parameters not supported by oEmbed
-UNSUPPORTED_PARAMS = ['autoplay', 'loop']
+
+def build_html_iframe(response, **params):
+    html = response.get('html')
+    data_url = response.get('player_url')
+    if html and data_url:
+        # What follows is a pretty nasty looking "hack"
+        # oEmbed hss not implemented some parameters
+        # and so for these we need to add them manually to the iframe.
+        parsed_data_url = urlparse(data_url)
+        url_parts = list(parsed_data_url)
+        params.update(parse_qs(parsed_data_url.query))
+        url_parts[4] = urlencode(params, True)
+        new_url = 'src="%s" ' % urlunparse(url_parts)
+        html = re.sub(IFRAME_SRC_REGEX, new_url, html)
+    return html
+
+
+def get_player_url(response):
+    html = response.get('html', '')
+    return re.search(IFRAME_SRC_REGEX, html)
 
 
 def get_embed_code(**kwargs):
@@ -21,26 +39,5 @@ def get_embed_code(**kwargs):
         data = providers.request(**kwargs)
     except (ProviderNotFoundException, ProviderException) as e:
         raise Exception(e.message)
-    if data.get('type') != 'video':
-        raise Exception('This must be an url for a video. '
-                        'The "%(type)s" type is not supported.' % {'type': data.get('type')})
-
-    html = data['html']
-    if any(param in kwargs for param in UNSUPPORTED_PARAMS):
-        data_url = re.search(IFRAME_SRC_REGEX, html)
-        if data_url:
-            # What follows is a pretty nasty looking "hack"
-            # oEmbed hss not implemented some parameters
-            # and so for these we need to add them manually to the iframe.
-            parsed_data_url = urlparse(data_url.groups()[0])
-            url_parts = list(parsed_data_url)
-            query = parse_qs(parsed_data_url.query)
-            for param in UNSUPPORTED_PARAMS:
-                value = kwargs.get(param)
-                if value and param not in query:
-                    query[param] = value
-            else:
-                url_parts[4] = urlencode(query, True)
-                new_url = 'src="%s" ' % urlunparse(url_parts)
-                html = re.sub(IFRAME_SRC_REGEX, new_url, html)
-    return html
+    else:
+        return data
