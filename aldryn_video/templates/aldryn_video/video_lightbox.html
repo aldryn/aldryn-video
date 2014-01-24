@@ -1,7 +1,0 @@
-{% load static sekizai_tags %}
-{% addtoblock "js" %}<script src="{% static "js/plugins/cl.lightbox.js" %}"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script>jQuery(document).ready(function ($) {var lightbox = new Cl.Lightbox('.lightbox');});</script>{% endaddtoblock %}
-
-<div class="media-content">
-	<a class="lightbox" href="{{ instance.oembed_data.player_url }}"><img src="{{ instance.oembed_data.thumbnail_url }}" /></a>
-</div>

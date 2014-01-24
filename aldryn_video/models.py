@@ -18,11 +18,6 @@ class OEmbedVideoPlugin(CMSPlugin):
     height = models.IntegerField(_('Height'), null=True, blank=True)
     auto_play = models.BooleanField(_('auto play'), default=False)
     loop_video = models.BooleanField(_('loop'), help_text=_('when true, the video repeats itself when over.'), default=False)
-    use_lightbox = models.BooleanField(
-        verbose_name=('use lightbox ?'),
-        help_text=_('when true, the video will open in a popup (lightbox)'),
-        default=False
-    )
     # cached oembed data
     oembed_data = JSONField(null=True)
 

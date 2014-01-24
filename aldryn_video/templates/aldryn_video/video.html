@@ -1,5 +1,1 @@
-{% if instance.use_lightbox %}
-	{% include "aldryn_video/video_lightbox.html" %}
-{% else %}
-	{{ instance.html|safe }}
-{% endif %}
+{{ instance.html|safe }}
