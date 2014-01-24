@@ -20,6 +20,7 @@ class OEmbedVideoPlugin(CMSPlugin):
     loop_video = models.BooleanField(_('loop'), help_text=_('when true, the video repeats itself when over.'), default=False)
     # cached oembed data
     oembed_data = JSONField(null=True)
+    custom_params = models.CharField(_('custom params'), help_text=_('define custom params (e.g. "start=10&end=50")'), max_length=200, blank=True)
 
     def __unicode__(self):
         return self.url
@@ -34,6 +35,10 @@ class OEmbedVideoPlugin(CMSPlugin):
             extra['autoplay'] = 1
         if self.loop_video:
             extra['loop'] = 1
+        if self.custom_params:
+            for param in self.custom_params.split("&"):
+                key, value = param.split("=")
+                extra[key] = value
         return extra
 
     @property
