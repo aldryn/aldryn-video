@@ -28,7 +28,7 @@ setup(
     packages=['aldryn_video'],
     license='LICENSE.txt',
     platforms=['OS Independent'],
-    install_requires=['micawber', 'django-json-field'],
+    install_requires=['micawber', 'django-json-field', 'beautifulsoup4'],
     classifiers=CLASSIFIERS,
     include_package_data=True,
     zip_safe=False
