@@ -14,8 +14,18 @@ class OEmbedVideoPlugin(CMSPluginBase):
     model = models.OEmbedVideoPlugin
 
     fieldsets = (
-        (None, {'fields': ['url', ('width', 'height'), 'auto_play',
-                           'loop_video', 'custom_params']}),
+        (None,
+         {'fields': ['url']},
+        ),
+        (_('Advanced Options'),
+         {'fields': [
+             ('width', 'height'),
+             ('iframe_width', 'iframe_height'),
+             'auto_play',
+             'loop_video',
+             'custom_params'
+         ]}
+        )
     )
 
     def render(self, context, instance, placeholder):
