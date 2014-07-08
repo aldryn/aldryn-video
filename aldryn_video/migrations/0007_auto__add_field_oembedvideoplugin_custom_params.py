@@ -27,7 +27,7 @@ class Migration(SchemaMigration):
             'custom_params': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'loop_video': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'oembed_data': ('json_field.fields.JSONField', [], {'default': "u'null'", 'null': 'True'}),
+            'oembed_data': ('jsonfield.fields.JSONField', [], {'default': "u'null'", 'null': 'True'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '100'}),
             'width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
         },

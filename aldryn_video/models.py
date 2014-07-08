@@ -5,9 +5,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from cms.models.pluginmodel import CMSPlugin
 
-from json_field import JSONField
+from jsonfield import JSONField
 
-from aldryn_video.utils import build_html_iframe, get_embed_code, get_player_url
+from .utils import build_html_iframe, get_embed_code, get_player_url
 
 
 class OEmbedVideoPlugin(CMSPlugin):
