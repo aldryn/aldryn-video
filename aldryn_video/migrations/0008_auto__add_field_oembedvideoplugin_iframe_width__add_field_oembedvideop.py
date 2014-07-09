@@ -29,7 +29,7 @@ class Migration(SchemaMigration):
 
     models = {
         u'aldryn_video.oembedvideoplugin': {
-            'Meta': {'object_name': 'OEmbedVideoPlugin', '_ormbases': ['cms.CMSPlugin']},
+            'Meta': {'object_name': 'OEmbedVideoPlugin', 'db_table': "u'cmsplugin_oembedvideoplugin'", '_ormbases': ['cms.CMSPlugin']},
             'auto_play': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'}),
             'custom_params': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
