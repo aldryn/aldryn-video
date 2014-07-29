@@ -33,11 +33,11 @@ class Migration(DataMigration):
             sql = 'INSERT INTO %s (cmsplugin_ptr_id, url, width, height, auto_play, loop_video, oembed_data, ' \
                   'custom_params, iframe_width, iframe_height) VALUES ' % to_table
             for record in data_list:
-                width = re.search('width="(\d+)"', record[4])
-                width = int(width.groups()[0]) if width else ''
+                iframe_width = re.search('width="(\d+)"', record[4])
+                iframe_width = iframe_width.groups()[0] if iframe_width else 'null'
 
-                height = re.search('height="(\d+)"', record[4])
-                height = int(height.groups()[0]) if width else ''
+                iframe_height = re.search('height="(\d+)"', record[4])
+                iframe_height = iframe_height.groups()[0] if iframe_width else 'null'
 
                 # get embed code
                 if record[2] and record[3]:
@@ -58,8 +58,8 @@ class Migration(DataMigration):
                     'loop_video': 'false',
                     'embed_code': json.dumps(embed_code),
                     'custom_params': '',
-                    'iframe_width': width or 'null',
-                    'iframe_height': height or 'null',
+                    'iframe_width': iframe_width,
+                    'iframe_height': iframe_height,
                 }
 
                 new_record_sql = \
