@@ -12,6 +12,11 @@ from aldryn_video.utils import get_embed_code
 class Migration(DataMigration):
     """
     This migration is supposed to fix all issues regarding table names once and for all
+
+    Migrates plugin data from the old table naming scheme to the new one and ensures new table
+    is fully migrated (all fields exist).
+
+    Also takes care of both tables containing data; and data sanity in general.
     """
 
     def forwards(self, orm):
@@ -27,7 +32,7 @@ class Migration(DataMigration):
 
         def migrate_data(from_table, to_table):
             """
-            from_table is not migrated, to_table is
+            ``from_table`` is not migrated, ``to_table`` is
             """
             data_list = get_table_records(from_table)
             sql = 'INSERT INTO %s (cmsplugin_ptr_id, url, width, height, auto_play, loop_video, oembed_data, ' \
@@ -68,6 +73,7 @@ class Migration(DataMigration):
 
                 sql += new_record_sql
 
+            # strip last comma and add semicolon to finish of the statement
             sql = sql[:-1] + ';'
             return db.execute(sql)
 
@@ -96,14 +102,12 @@ class Migration(DataMigration):
             pass
 
         elif old_table_exists and not new_table_exists:
-            # exec_task('rename old table to new name')
             db.rename_table(old_table, new_table)
 
         elif old_table_exists and new_table_exists:
             if old_table_has_data and not new_table_has_data:
                 if old_table_is_migrated:
                     db.delete_table(new_table)
-
                 else:
                     migrate_data(old_table, new_table)
                     db.delete_table(old_table)
@@ -111,7 +115,6 @@ class Migration(DataMigration):
             elif not old_table_has_data and new_table_has_data:
                 if new_table_is_migrated:
                     db.delete_table(old_table)
-
                 else:
                     migrate_data(new_table, old_table)
                     db.delete_table(new_table)
@@ -121,7 +124,6 @@ class Migration(DataMigration):
                 if new_table_is_migrated:
                     migrate_data(old_table, new_table)
                     db.delete_table(old_table)
-
                 else:
                     migrate_data(new_table, old_table)
                     db.delete_table(new_table)
