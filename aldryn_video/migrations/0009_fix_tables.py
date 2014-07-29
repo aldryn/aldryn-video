@@ -23,9 +23,7 @@ class Migration(DataMigration):
             description = connection.introspection.get_table_description(connection.cursor(), table)
             haystack = [c[0] for c in description]
             needles = ['auto_play', 'loop_video', 'oembed_data', 'custom_params', 'iframe_width', 'iframe_height']
-            if all(needle in haystack for needle in needles):
-                return True
-            return False
+            return all(needle in haystack for needle in needles)
 
         def migrate_data(from_table, to_table):
             """
