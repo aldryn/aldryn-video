@@ -6,7 +6,6 @@ author:
   url: https://www.divio.ch
 installed-apps:
   - aldryn_video
-version: 0.0.8
 description: Easy video embeding.
 license:
   name: BSD
