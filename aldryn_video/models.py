@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import re
+from urlparse import urlparse
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -11,6 +14,9 @@ from .utils import build_html_iframe, get_embed_code, get_player_url
 
 
 class OEmbedVideoPlugin(CMSPlugin):
+    # exact provide name from youtube oembed response
+    YOUTUBE = 'YouTube'
+
     ALLOWED_MEDIA_TYPES = ['video']
 
     url = models.URLField(_('URL'), max_length=100, help_text=_('vimeo and youtube supported.'))
@@ -51,11 +57,25 @@ class OEmbedVideoPlugin(CMSPlugin):
                 'width': self.iframe_width,
                 'height': self.iframe_height
             }
-            self._html = build_html_iframe(
+            provider_name = self.oembed_data.get('provider_name', '')
+            video_url = get_player_url(self.oembed_data)
+
+            if video_url and provider_name == self.YOUTUBE and self.loop_video:
+                # Unfortunately youtube requires a "playlist" parameter when using loop
+                # I don't set this in get_oembed_params because it's not really an oembed thing.
+                # very specific to youtube.
+                url = urlparse(video_url)
+                # We assume that youtube's embed format is consistent
+                # and looks like http://www.youtube.com/embed/-UUx10KOWIE?feature=oembed
+                params['playlist'] = url.path.split('/')[2]
+
+            html = build_html_iframe(
                 self.oembed_data,
                 url_params=params,
                 iframe_attrs=attrs
             )
+
+            self._html = re.sub('(https?://)', '//', html)
         return self._html
 
     def clean(self):

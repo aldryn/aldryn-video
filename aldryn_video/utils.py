@@ -12,7 +12,6 @@ providers = micawber.bootstrap_basic()
 
 def build_html_iframe(response, url_params=None, iframe_attrs=None):
     html = response.get('html', '')
-    data_url = response.get('player_url')
 
     if url_params is None:
         url_params = {}
@@ -20,16 +19,23 @@ def build_html_iframe(response, url_params=None, iframe_attrs=None):
     if iframe_attrs is None:
         iframe_attrs = {}
 
-    if html and data_url:
+    if html:
         # What follows is a pretty nasty looking "hack"
         # oEmbed hss not implemented some parameters
         # and so for these we need to add them manually to the iframe.
+        html = BeautifulSoup(html).iframe
+
+        data_url = response.get('player_url', html['src'])
         player_url = urlparse(data_url)
-        url_params.update(parse_qs(player_url.query))
+
+        queries = parse_qs(player_url.query)
+        url_params.update(queries)
+
         url_parts = list(player_url)
         url_parts[4] = urlencode(url_params, True)
-        html = BeautifulSoup(html).iframe
+
         html['src'] = urlunparse(url_parts)
+
         for key, value in iframe_attrs.iteritems():
             if value:
                 html[key] = value
