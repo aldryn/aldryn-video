@@ -4,6 +4,10 @@ from setuptools import setup
 from aldryn_video import __version__
 
 
+REQUIREMENTS = [
+    'aldryn-boilerplates>=0.6',
+]
+
 CLASSIFIERS = [
     'Development Status :: 2 - Pre-Alpha',
     'Environment :: Web Environment',
