@@ -37,7 +37,7 @@ class OEmbedVideoPlugin(CMSPluginBase):
         return context
 
     def icon_src(self, instance):
-        path = 'aldryn_video/icons/video_32x32.png'
+        path = 'img/aldryn_video/video-32x32.png'
         prefix = PrefixNode.handle_simple("STATIC_URL") or PrefixNode.handle_simple("MEDIA_URL")
         return urljoin(prefix, path)
 
