@@ -35,6 +35,7 @@ class OEmbedVideoPlugin(CMSPlugin):
 
     def get_oembed_params(self):
         extra = {}
+
         if self.width:
             extra['maxwidth'] = self.width
         if self.height:
@@ -80,6 +81,14 @@ class OEmbedVideoPlugin(CMSPlugin):
 
     def clean(self):
         params = self.get_oembed_params()
+
+        if self.url.startswith('https'):
+            # scheme usually only affects youtube
+            # but we don't know the provider at this point.
+            # also I add this here because if added to get_oembed_params
+            # the parameter stays when requesting the video.
+            params['scheme'] = 'https'
+
         try:
             data = get_embed_code(url=self.url, **params)
         except Exception as e:
