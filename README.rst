@@ -2,7 +2,16 @@
 Aldryn Video
 ============
 
-Plugin allows to embed videos from YouTube or Vimeo.
+Aldryn Video provides an elegant way to embed videos in your django CMS sites.
+
+A number of video hosting providers are supported, including:
+
+* Vimeo
+* YouTube
+
+(any provider that uses the `oEmbed specification <http://oembed.com>`_ should be supported).
+
+The plugin also provides access to various control and sizing parameters for embedded video.
 
 
 Installation
