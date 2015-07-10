@@ -7,3 +7,10 @@ HELPER_SETTINGS = {
     'LANGUAGES': (('en', 'English'),),
     'LANGUAGE_CODE': 'en',
 }
+
+def run():
+    from djangocms_helper import runner
+    runner.cms('aldryn_video')
+
+if __name__ == '__main__':
+    run()
