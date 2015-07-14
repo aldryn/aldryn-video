@@ -12,7 +12,10 @@ from jsonfield import JSONField
 
 from .utils import build_html_iframe, get_embed_code, get_player_url
 
+from django.utils.encoding import python_2_unicode_compatible
 
+
+@python_2_unicode_compatible
 class OEmbedVideoPlugin(CMSPlugin):
     # exact provide name from youtube oembed response
     YOUTUBE = 'YouTube'
@@ -30,7 +33,7 @@ class OEmbedVideoPlugin(CMSPlugin):
     oembed_data = JSONField(null=True)
     custom_params = models.CharField(_('custom params'), help_text=_('define custom params (e.g. "start=10&end=50")'), max_length=200, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.url
 
     def get_oembed_params(self):
