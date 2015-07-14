@@ -1,59 +1,34 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import jsonfield.fields
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'OEmbedVideoPlugin'
-        db.create_table('cmsplugin_oembedvideoplugin', (
-            ('cmsplugin_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['cms.CMSPlugin'], unique=True, primary_key=True)),
-            ('url', self.gf('django.db.models.fields.URLField')(max_length=100)),
-            ('width', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('height', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('html', self.gf('django.db.models.fields.TextField')(blank=True)),
-        ))
-        db.send_create_signal('aldryn_video', ['OEmbedVideoPlugin'])
+    dependencies = [
+        ('cms', '__latest__'),
+    ]
 
-
-    def backwards(self, orm):
-        # Deleting model 'OEmbedVideoPlugin'
-        db.delete_table('cmsplugin_oembedvideoplugin')
-
-
-    models = {
-        'aldryn_video.oembedvideoplugin': {
-            'Meta': {'object_name': 'OEmbedVideoPlugin', 'db_table': "'cmsplugin_oembedvideoplugin'", '_ormbases': ['cms.CMSPlugin']},
-            'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'}),
-            'height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'html': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '100'}),
-            'width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
-        },
-        'cms.cmsplugin': {
-            'Meta': {'object_name': 'CMSPlugin'},
-            'changed_date': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'creation_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'language': ('django.db.models.fields.CharField', [], {'max_length': '15', 'db_index': 'True'}),
-            'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'parent': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cms.CMSPlugin']", 'null': 'True', 'blank': 'True'}),
-            'placeholder': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cms.Placeholder']", 'null': 'True'}),
-            'plugin_type': ('django.db.models.fields.CharField', [], {'max_length': '50', 'db_index': 'True'}),
-            'position': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'})
-        },
-        'cms.placeholder': {
-            'Meta': {'object_name': 'Placeholder'},
-            'default_width': ('django.db.models.fields.PositiveSmallIntegerField', [], {'null': 'True'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'slot': ('django.db.models.fields.CharField', [], {'max_length': '50', 'db_index': 'True'})
-        }
-    }
-
-    complete_apps = ['aldryn_video']
+    operations = [
+        migrations.CreateModel(
+            name='OEmbedVideoPlugin',
+            fields=[
+                ('cmsplugin_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='cms.CMSPlugin')),
+                ('url', models.URLField(help_text='vimeo and youtube supported.', max_length=100, verbose_name='URL')),
+                ('width', models.IntegerField(null=True, verbose_name='Width', blank=True)),
+                ('height', models.IntegerField(null=True, verbose_name='Height', blank=True)),
+                ('iframe_width', models.CharField(max_length=15, verbose_name='iframe width', blank=True)),
+                ('iframe_height', models.CharField(max_length=15, verbose_name='iframe height', blank=True)),
+                ('auto_play', models.BooleanField(default=False, verbose_name='auto play')),
+                ('loop_video', models.BooleanField(default=False, help_text='when true, the video repeats itself when over.', verbose_name='loop')),
+                ('oembed_data', jsonfield.fields.JSONField(null=True)),
+                ('custom_params', models.CharField(help_text='define custom params (e.g. "start=10&end=50")', max_length=200, verbose_name='custom params', blank=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=('cms.cmsplugin',),
+        ),
+    ]
