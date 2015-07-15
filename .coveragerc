@@ -4,6 +4,7 @@ source = aldryn_video
 omit =
     aldryn_video/south_migrations/*
     aldryn_video/migrations/*
+    aldryn_video/tests.py
 
 [report]
 exclude_lines =
