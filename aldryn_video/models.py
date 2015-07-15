@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-from urlparse import urlparse
+from django.utils.six.moves.urllib.parse import urlparse
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -95,7 +95,7 @@ class OEmbedVideoPlugin(CMSPlugin):
         try:
             data = get_embed_code(url=self.url, **params)
         except Exception as e:
-            raise ValidationError(e.message)
+            raise ValidationError(e)
         else:
             media_type = data.get('type')
             if media_type not in self.ALLOWED_MEDIA_TYPES:

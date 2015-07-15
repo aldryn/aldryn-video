@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from urllib import urlencode
-from urlparse import parse_qs, urlparse, urlunparse
+from django.utils.six.moves.urllib.parse import urlencode
+from django.utils.six.moves.urllib.parse import parse_qs, urlparse, urlunparse
 
 from bs4 import BeautifulSoup
 
