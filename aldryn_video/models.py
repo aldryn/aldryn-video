@@ -95,7 +95,11 @@ class OEmbedVideoPlugin(CMSPlugin):
         try:
             data = get_embed_code(url=self.url, **params)
         except Exception as e:
-            raise ValidationError(e)
+            try:
+                msg = e.message
+            except AttributeError:
+                msg = e.args[0]
+            raise ValidationError(msg)
         else:
             media_type = data.get('type')
             if media_type not in self.ALLOWED_MEDIA_TYPES:
