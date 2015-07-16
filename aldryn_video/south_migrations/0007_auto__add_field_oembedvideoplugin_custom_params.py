@@ -1,22 +1,25 @@
 # -*- coding: utf-8 -*-
-import datetime
+from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+from ..utils import rename_tables_old_to_new, rename_tables_new_to_old
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'OEmbedVideoPlugin.use_lightbox'
-        db.add_column(u'cmsplugin_oembedvideoplugin', 'use_lightbox',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
+        rename_tables_old_to_new(db)
+        # Adding field 'OEmbedVideoPlugin.custom_params'
+        db.add_column(u'aldryn_video_oembedvideoplugin', 'custom_params',
+                      self.gf('django.db.models.fields.CharField')(default='', max_length=200, blank=True),
                       keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting field 'OEmbedVideoPlugin.use_lightbox'
-        db.delete_column(u'cmsplugin_oembedvideoplugin', 'use_lightbox')
+        rename_tables_new_to_old(db)
+        # Deleting field 'OEmbedVideoPlugin.custom_params'
+        db.delete_column(u'cmsplugin_oembedvideoplugin', 'custom_params')
 
 
     models = {
@@ -24,11 +27,11 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'OEmbedVideoPlugin', 'db_table': "u'cmsplugin_oembedvideoplugin'", '_ormbases': ['cms.CMSPlugin']},
             'auto_play': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'cmsplugin_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['cms.CMSPlugin']", 'unique': 'True', 'primary_key': 'True'}),
+            'custom_params': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'height': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'html': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'loop_video': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'oembed_data': ('jsonfield.fields.JSONField', [], {'default': "u'null'", 'null': 'True'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '100'}),
-            'use_lightbox': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
         },
         'cms.cmsplugin': {

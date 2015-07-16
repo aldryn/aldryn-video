@@ -4,27 +4,22 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+from ..utils import rename_tables_old_to_new, rename_tables_new_to_old
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'OEmbedVideoPlugin.auto_play'
-        db.add_column(u'cmsplugin_oembedvideoplugin', 'auto_play',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
-
-        # Adding field 'OEmbedVideoPlugin.loop_video'
-        db.add_column(u'cmsplugin_oembedvideoplugin', 'loop_video',
+        rename_tables_old_to_new(db)
+        # Adding field 'OEmbedVideoPlugin.use_lightbox'
+        db.add_column(u'aldryn_video_oembedvideoplugin', 'use_lightbox',
                       self.gf('django.db.models.fields.BooleanField')(default=False),
                       keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting field 'OEmbedVideoPlugin.auto_play'
-        db.delete_column(u'cmsplugin_oembedvideoplugin', 'auto_play')
-
-        # Deleting field 'OEmbedVideoPlugin.loop_video'
-        db.delete_column(u'cmsplugin_oembedvideoplugin', 'loop_video')
+        rename_tables_new_to_old(db)
+        # Deleting field 'OEmbedVideoPlugin.use_lightbox'
+        db.delete_column(u'cmsplugin_oembedvideoplugin', 'use_lightbox')
 
 
     models = {
@@ -36,6 +31,7 @@ class Migration(SchemaMigration):
             'html': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'loop_video': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '100'}),
+            'use_lightbox': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
         },
         'cms.cmsplugin': {

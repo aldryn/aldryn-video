@@ -1,30 +1,25 @@
 # -*- coding: utf-8 -*-
-import datetime
+from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+from ..utils import rename_tables_old_to_new, rename_tables_new_to_old
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting field 'OEmbedVideoPlugin.html'
-        db.delete_column(u'cmsplugin_oembedvideoplugin', 'html')
-
-        # Adding field 'OEmbedVideoPlugin.oembed_data'
-        db.add_column(u'cmsplugin_oembedvideoplugin', 'oembed_data',
-                      self.gf('jsonfield.fields.JSONField')(default=u'null', null=True),
-                      keep_default=False)
+        rename_tables_old_to_new(db)
+        # Deleting field 'OEmbedVideoPlugin.use_lightbox'
+        db.delete_column(u'aldryn_video_oembedvideoplugin', 'use_lightbox')
 
 
     def backwards(self, orm):
-        # Adding field 'OEmbedVideoPlugin.html'
-        db.add_column(u'cmsplugin_oembedvideoplugin', 'html',
-                      self.gf('django.db.models.fields.TextField')(default='', blank=True),
+        rename_tables_new_to_old(db)
+        # Adding field 'OEmbedVideoPlugin.use_lightbox'
+        db.add_column(u'cmsplugin_oembedvideoplugin', 'use_lightbox',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
                       keep_default=False)
-
-        # Deleting field 'OEmbedVideoPlugin.oembed_data'
-        db.delete_column(u'cmsplugin_oembedvideoplugin', 'oembed_data')
 
 
     models = {
@@ -36,7 +31,6 @@ class Migration(SchemaMigration):
             'loop_video': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'oembed_data': ('jsonfield.fields.JSONField', [], {'default': "u'null'", 'null': 'True'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '100'}),
-            'use_lightbox': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'width': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
         },
         'cms.cmsplugin': {

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-from urlparse import urlparse
+from django.utils.six.moves.urllib.parse import urlparse
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -12,7 +12,10 @@ from jsonfield import JSONField
 
 from .utils import build_html_iframe, get_embed_code, get_player_url
 
+from django.utils.encoding import python_2_unicode_compatible
 
+
+@python_2_unicode_compatible
 class OEmbedVideoPlugin(CMSPlugin):
     # exact provide name from youtube oembed response
     YOUTUBE = 'YouTube'
@@ -30,7 +33,7 @@ class OEmbedVideoPlugin(CMSPlugin):
     oembed_data = JSONField(null=True)
     custom_params = models.CharField(_('custom params'), help_text=_('define custom params (e.g. "start=10&end=50")'), max_length=200, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.url
 
     def get_oembed_params(self):
@@ -92,7 +95,11 @@ class OEmbedVideoPlugin(CMSPlugin):
         try:
             data = get_embed_code(url=self.url, **params)
         except Exception as e:
-            raise ValidationError(e.message)
+            try:
+                msg = e.message
+            except AttributeError:
+                msg = e.args[0]
+            raise ValidationError(msg)
         else:
             media_type = data.get('type')
             if media_type not in self.ALLOWED_MEDIA_TYPES:
