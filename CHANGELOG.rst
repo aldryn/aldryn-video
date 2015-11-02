@@ -1,3 +1,8 @@
+0.5.1 (2015-11-02)
+==================
+
+* Make South migrations work with newer (post-MPTT) versions of the CMS
+
 0.5.0 (2015-10-01)
 ==================
 
