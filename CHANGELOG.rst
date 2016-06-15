@@ -1,3 +1,9 @@
+1.0.0 (2016-06-15)
+==================
+
+* Added translations and transifex configuration
+
+
 0.5.1 (2015-11-02)
 ==================
 
