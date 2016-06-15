@@ -41,4 +41,5 @@ setup(
     long_description=open('README.rst').read(),
     include_package_data=True,
     zip_safe=False,
+    test_suite="test_settings.run",
 )
