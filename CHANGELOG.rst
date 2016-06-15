@@ -2,7 +2,7 @@
 ==================
 
 * Added translations and transifex configuration
-
+* Added compatibility for other boilerplates
 
 0.5.1 (2015-11-02)
 ==================
