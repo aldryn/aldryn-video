@@ -1,6 +1,6 @@
-============
+############
 Aldryn Video
-============
+############
 
 Aldryn Video provides an elegant way to embed videos in your django CMS sites.
 
@@ -14,6 +14,7 @@ A number of video hosting providers are supported, including:
 The plugin also provides access to various control and sizing parameters for embedded video.
 
 
+============
 Installation
 ============
 
