@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.0.0 (UNRELEASED)
+1.0.0 (2016-06-15)
 ------------------
 
 * Added translations and transifex configuration
