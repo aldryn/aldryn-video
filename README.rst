@@ -1,6 +1,6 @@
-============
+############
 Aldryn Video
-============
+############
 
 Aldryn Video provides an elegant way to embed videos in your django CMS sites.
 
@@ -14,6 +14,7 @@ A number of video hosting providers are supported, including:
 The plugin also provides access to various control and sizing parameters for embedded video.
 
 
+============
 Installation
 ============
 
@@ -38,3 +39,9 @@ Configure ``aldryn-boilerplates`` (https://pypi.python.org/pypi/aldryn-boilerpla
 To use the old templates, set ``ALDRYN_BOILERPLATE_NAME='legacy'``.
 To use https://github.com/aldryn/aldryn-boilerplate-standard (recommended, will be renamed to
 ``aldryn-boilerplate-bootstrap3``) set ``ALDRYN_BOILERPLATE_NAME='bootstrap3'``.
+
+Credits
+-------
+
+Video file type icon by dreamxis, http://dreamxis.themex.net/,
+under Creative Commons Attribution license.

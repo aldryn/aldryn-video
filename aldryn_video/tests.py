@@ -36,13 +36,9 @@ class OEmbedVideoPluginTests(TestCase):
         )
         model_instance.clean()
         html = model_instance.render_plugin({})
-        expected_response = ('<div class="aldryn aldryn-video hidden-print">\n'
-            '    <div class="embed-responsive embed-responsive-16by9">\n'
-            '        <iframe src="https://www.youtube.com/embed/31KMjdC6DxE?feature=oembed"\n'
-            '            class="embed-responsive-item"\n'
-            '            style=""></iframe>\n'
-            '    </div>\n'
-            '</div>\n ')
+        expected_response = ('<iframe src="https://www.youtube.com/embed/31KMjdC6DxE?feature=oembed"\n'
+            '    class="iframe iframe-video"\n'
+            '    style=""></iframe>\n')
         self.assertEqual(html.strip(), expected_response.strip())
 
 
@@ -66,11 +62,7 @@ class VideoTestCase(CMSTestCase):
         plugin.save()
         page.publish('en')
         response = self.client.get(page.get_absolute_url('en'))
-        expected_response = ('    <div class="aldryn aldryn-video hidden-print">\n'
-            '    <div class="embed-responsive embed-responsive-16by9">\n'
-            '        <iframe src="https://www.youtube.com/embed/31KMjdC6DxE?feature=oembed&amp;autoplay=1"\n'
-            '            class="embed-responsive-item"\n'
-            '            style="width: 560px; height: 315px;"></iframe>\n'
-            '    </div>\n'
-            '</div>')
+        expected_response = ('<iframe src="https://www.youtube.com/embed/31KMjdC6DxE?feature=oembed&amp;autoplay=1"\n'
+            '    class="iframe iframe-video"\n'
+            '    style="width: 560px; height: 315px;"></iframe>\n')
         self.assertContains(response, expected_response)

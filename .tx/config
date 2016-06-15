@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[aldryn-video.aldryn_video]
+file_filter = aldryn_video/locale/<lang>/LC_MESSAGES/django.po
+source_file = aldryn_video/locale/en/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
