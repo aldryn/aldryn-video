@@ -1,3 +1,10 @@
+**Deprecated**
+
+This project has been succeeded by `djangocms-video <https://github.com/divio/djangocms-video>`_ , and is no longer supported.
+
+Divio will undertake no further development or maintenance of this project. If you are interested in  taking responsibility for this project as its maintainer, please contact us via www.divio.com.
+
+
 ############
 Aldryn Video
 ############
